@@ -8,29 +8,31 @@ intents.members = True
 bot = commands.Bot(command_prefix='$', intents=intents)
 
 @bot.command()
-@commands.has_role("LW-Core TEAM")
+@commands.has_role("LW-Core TEAM")#change as per your req
 async def role(ctx:commands.context.Context, arg:str):
     guild = ctx.guild
     try:
+        #reading from the file
         memlist=str(await ctx.message.attachments[0].read(),encoding='utf-8')
     except:
+        #if there is no file that is uploaded with the message this runs
         await ctx.send("Pls upload a csv file")
         return
-    #print("READ in original",'\n',memlist)
+        
     try:
         role = discord.utils.get(guild.roles, name=arg)
     except:
         await ctx.send("There is some problem fetching the role.")
         return
     
-    if not role:
+    if not role: #when no role exist,as defined in argument 
         await ctx.send("role not found pls create the role first")
         return
+        
     if memlist.endswith('\n'):
         memlist=memlist[:len(memlist)-1]
     
     memlist=memlist.split('\n')
-    #print("\n\nlist splited by \\n",'\n',memlist)
 
     i=0
     while i!=len(memlist):
@@ -53,4 +55,4 @@ async def role(ctx:commands.context.Context, arg:str):
         await user.add_roles(role)
         await ctx.send(i+" set role of "+arg)
 
-bot.run('MTEyNzI0OTU2OTI5ODc4ODQwNQ.GV5DpO.ffrHwS5JQay4zzWo1wf607nQSMpEExZt10rIrg')
+bot.run('Your Token here')
