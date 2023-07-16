@@ -21,6 +21,7 @@ async def instant(ctx:commands.context.Context, rolename:str, username:str):
     role = discord.utils.get(ctx.guild.roles, name=rolename)
     if role is None:
         await ctx.send(rolename+"does not exist")
+        return
     if user is not None:
         await user.add_roles(role)
         await ctx.send(username+" given role to "+ rolename)
@@ -50,21 +51,20 @@ async def role(ctx:commands.context.Context, arg:str):
         memlist=memlist[:len(memlist)-1]
     
     memlist=memlist.split('\n')
-    #print("\n\nlist splited by \\n",'\n',memlist)
 
     i=0
     while i!=len(memlist):
         memlist[i]=memlist[i].split(',')# type: ignore            
         i=i+1
-    del i
     
     memlist=np.array(memlist,dtype=str)
     
     i=0
     while "username" not in memlist[0,i].strip().lower():
         i=i+1
+    
     memlist=memlist[1:,i]
-    #print(memlist)
+    
     for i in memlist:
         i=i[:len(i)-1]
         print(i)
